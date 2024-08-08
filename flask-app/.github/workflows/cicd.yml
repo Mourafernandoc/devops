@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask
+
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 --max-line-length=88 .
+
+    - name: Build Docker image
+      run: |
+        docker build -t <your-dockerhub-username>/flask-app:latest .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Push Docker image
+      run: docker push <your-dockerhub-username>/flask-app:latest
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl set image deployment/flask-app flask-app=<your-dockerhub-username>/flask-app:latest
