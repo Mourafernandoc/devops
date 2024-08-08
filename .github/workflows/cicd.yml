@@ -38,4 +38,4 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          kubectl set image deployment/flask-app flask-app=<SEU_USUARIO_DOCKERHUB>/flask-app:latest -n flask-app
+          kubectl set image deployment/flask-app flask-app=skyennonet/flask-app:latest -n flask-app
