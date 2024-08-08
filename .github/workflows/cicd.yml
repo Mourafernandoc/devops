@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -36,6 +38,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Configure kubectl
+        run: aws eks update-kubeconfig --name devops-cluster   
+
+
       - name: Update Kubernetes deployment
         run: |
           kubectl set image deployment/flask-app flask-app=skyennonet/flask-app:latest -n flask-app
+          kubectl rollout status deployment/flask-app -n flask-app
