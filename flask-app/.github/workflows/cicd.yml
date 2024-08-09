@@ -28,6 +28,7 @@ jobs:
           context: .
           push: true
           tags: skyennonet/flask-app-test:latest
+          file: ./flask-app/Dockerfile
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
