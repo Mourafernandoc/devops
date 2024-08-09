@@ -27,9 +27,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./flask-app
           push: true
-          tags: skyennonet/flask-app:latest
+          tags: skyennonet/flask-app-test:latest
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -44,5 +44,5 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          kubectl set image deployment/flask-app flask-app=skyennonet/flask-app:latest -n flask-app
+          kubectl set image deployment/flask-app flask-app=skyennonet/flask-app-test:latest -n flask-app
           kubectl rollout status deployment/flask-app -n flask-app
