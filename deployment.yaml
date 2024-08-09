@@ -4,7 +4,7 @@ metadata:
   name: flask-app
   namespace: flask-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: flask-app
@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: skyennonet/flask-app:latest
+        image: skyennonet/flask-app-test:latest
         ports:
         - containerPort: 5000

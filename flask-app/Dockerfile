@@ -5,10 +5,11 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copiando o arquivo requirements.txt
-COPY requirements.txt .
+COPY app.py /app/
+COPY requirements.txt /app/
 
 # Instalando  as dependências
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiando código da aplicação
 COPY . .
